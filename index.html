@@ -61,10 +61,9 @@
                     <button onclick="showPage('members')" class="nav-link nav-btn text-sm tracking-widest opacity-40" data-page="members" id="text-navMembers">成員</button>
                     <button onclick="showPage('courses')" class="nav-link nav-btn text-sm tracking-widest opacity-40" data-page="courses" id="text-navCourses">課程</button>
                     
-                    <div class="flex items-center border border-current rounded-md overflow-hidden text-[10px] font-bold">
-                        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2 py-1 bg-black text-white">ZH</button>
-                        <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1">EN</button>
-                    </div>
+                    <button onclick="toggleLanguage()" class="nav-btn text-[10px] font-black tracking-widest border border-current px-3 py-1 hover:bg-current hover:invert transition-all">
+                        <span id="lang-toggle-text">EN</span>
+                    </button>
 
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
                         <i id="theme-icon" data-lucide="moon" size="18"></i>
@@ -91,10 +90,10 @@
                 <button onclick="showPage('home')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileHome">首頁</button>
                 <button onclick="showPage('members')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileMembers">成員</button>
                 <button onclick="showPage('courses')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileCourses">課程</button>
-                <div class="flex space-x-4 pt-4">
-                    <button onclick="setLanguage('zh')" class="font-bold border-b-2 border-current">中文</button>
-                    <button onclick="setLanguage('en')" class="font-bold opacity-40">English</button>
-                </div>
+                <button onclick="toggleLanguage()" class="text-left text-2xl font-bold tracking-widest flex items-center justify-between">
+                    <span id="text-mobileLangLabel">切換語言</span>
+                    <span id="lang-toggle-text-mobile" class="text-sm border border-current px-2 py-1">EN</span>
+                </button>
                 <button class="w-full py-4 text-center border border-black font-bold" id="text-mobileContact">聯繫我們</button>
             </div>
         </div>
@@ -272,13 +271,14 @@
             lang = l;
             localStorage.setItem('lang', l);
             applyLanguage();
-            // Update Lang Toggle Buttons
-            document.getElementById('lang-zh').className = l === 'zh' ? 'px-2 py-1 bg-black text-white' : 'px-2 py-1';
-            document.getElementById('lang-en').className = l === 'en' ? 'px-2 py-1 bg-black text-white' : 'px-2 py-1';
-            if (darkMode) {
-                document.getElementById('lang-zh').className = l === 'zh' ? 'px-2 py-1 bg-white text-black' : 'px-2 py-1';
-                document.getElementById('lang-en').className = l === 'en' ? 'px-2 py-1 bg-white text-black' : 'px-2 py-1';
-            }
+            // Update Toggle Button Text
+            const toggleText = l === 'zh' ? 'EN' : 'ZH';
+            document.getElementById('lang-toggle-text').innerText = toggleText;
+            document.getElementById('lang-toggle-text-mobile').innerText = toggleText;
+        }
+
+        function toggleLanguage() {
+            setLanguage(lang === 'zh' ? 'en' : 'zh');
         }
 
         function applyLanguage() {
@@ -292,6 +292,9 @@
             document.getElementById('text-mobileMembers').innerText = c.navMembers;
             document.getElementById('text-mobileCourses').innerText = c.navCourses;
             document.getElementById('text-mobileContact').innerText = c.navContact;
+            
+            const mobileLangLabel = document.getElementById('text-mobileLangLabel');
+            if (mobileLangLabel) mobileLangLabel.innerText = lang === 'zh' ? '切換語言' : 'Language';
 
             renderGroups();
             renderMembers();
