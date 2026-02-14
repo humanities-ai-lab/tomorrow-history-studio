@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>史學研究的數位工具 | 明日歷史工作室</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        body { font-family: 'Inter', "PingFang TC", "Microsoft JhengHei", sans-serif; }
+        .dark { background-color: #000; color: #fff; }
+        ::selection { background-color: #000; color: #fff; }
+        .dark ::selection { background-color: #fff; color: #000; }
+        ::-webkit-scrollbar { width: 0px; }
+    </style>
+</head>
+<body class="light-mode transition-colors duration-500">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='../index.html'">
+                    <div class="logo-border w-8 h-8 flex items-center justify-center border border-black">
+                        <i data-lucide="landmark" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-bold text-lg tracking-widest leading-none">明日歷史</span>
+                        <span class="text-[9px] tracking-tighter uppercase opacity-50">Tomorrow History</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../index.html" class="text-sm tracking-widest opacity-40 hover:opacity-100 font-bold no-underline">首頁</a>
+                    <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
+                        <i id="theme-icon" data-lucide="moon" size="18"></i>
+                    </button>
+                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest no-underline">
+                        聯繫我們
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-48 pb-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center space-x-2 mb-8 opacity-40">
+                    <i data-lucide="book-open" size="16"></i>
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase">114學年度下學期 歷史學系選修</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black mb-10 tracking-tight leading-[0.9]">
+                    史學研究的<br />
+                    <span class="opacity-40">數位工具</span>
+                </h1>
+                <p class="text-xl md:text-2xl max-w-3xl opacity-80 leading-relaxed font-light">
+                    這不僅是一門工具課。我們將從「人文科學知識本體論」出發，結合卡片盒筆記法與現代數位工具，重塑你在數位時代的研究思維。
+                </p>
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">授課教師</span>
+                        <p class="text-xl font-bold">張哲維 助理教授</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">學分數</span>
+                        <p class="text-xl font-bold">3 學分</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">預估人數</span>
+                        <p class="text-xl font-bold">60 人</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">實作核心</span>
+                        <p class="text-xl font-bold">Obsidian / AI</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals -->
+        <section class="py-24 px-6 bg-current/5">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-12">Course Goals</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <div>
+                        <h3 class="text-3xl font-black mb-6">數位思維與筆記</h3>
+                        <p class="opacity-70 leading-relaxed">以數位化筆記為基礎，將 Workflowy、Logseq、Obsidian 等軟體作為核心，實踐「卡片盒筆記法」，快速建構個人知識圖譜。</p>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-black mb-6">數據分析與可視化</h3>
+                        <p class="opacity-70 leading-relaxed">掌握 QGIS、Gephi、MySQL 等工具，應用於社會網絡分析與地理資訊管理，將繁瑣史料轉化為直觀的研究成果。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Syllabus -->
+        <section class="py-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-12">Syllabus</h2>
+                <div id="syllabus-list" class="space-y-4">
+                    <!-- Weekly items injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="py-24 px-6 bg-white text-black border-black/5 border-t">
+        <div class="max-w-6xl mx-auto text-center opacity-20 text-[10px] tracking-widest uppercase">
+            <p>© 2026 Tomorrow History Studio | NCKU History</p>
+        </div>
+    </footer>
+
+    <script>
+        let darkMode = localStorage.getItem('theme') === 'dark';
+        const syllabus = [
+            { week: "01", title: "課程介紹", desc: "史學研究的工作流程；數位時代下人文科學的知識本體論" },
+            { week: "02", title: "數位筆記軟體(一)", desc: "Obsidian的基本操作" },
+            { week: "03", title: "數位筆記軟體(二)", desc: "Obsidian的元資料處理與基礎外掛" },
+            { week: "04", title: "數位筆記軟體(三)", desc: "Obsidian與人文科學研究流程" },
+            { week: "05", title: "數位筆記軟體(四)", desc: "Obsidian的進階外掛" },
+            { week: "06", title: "資料科學基礎知識", desc: "人文資料科學的基礎知識" },
+            { week: "07", title: "校際活動日", desc: "停課" },
+            { week: "08", title: "維基百科實作(一)", desc: "歷史知識的共享與協作" },
+            { week: "09", title: "維基百科實作(二)", desc: "條目創建與編輯實務" },
+            { week: "10", title: "維基百科實作(三)", desc: "數位史料的公共呈現" },
+            { week: "11", title: "數位工具：QGIS", desc: "地理資訊系統工具應用" },
+            { week: "12", title: "數位工具：Gephi", desc: "社會網絡分析工具應用" },
+            { week: "13", title: "人際網絡分析", desc: "數位人文的發展與研究趨勢" },
+            { week: "14", title: "歷史遊戲劇本", desc: "歷史科普與遊戲化敘事創作" },
+            { week: "15", title: "數位思維實踐", desc: "卡片盒筆記法的深度實踐" },
+            { week: "16", title: "ChatGPT 運用(一)", desc: "生成式 AI 在史學研究的輔助" },
+            { week: "17", title: "ChatGPT 運用(二)", desc: "克服語言障礙與跨語境解讀" },
+            { week: "18", title: "期末成果發表", desc: "實作成果展示與同儕共評" }
+        ];
+
+        function init() {
+            const container = document.getElementById('syllabus-list');
+            container.innerHTML = syllabus.map(s => `
+                <div class="flex items-center space-x-8 py-6 border-b border-current/10 group">
+                    <span class="text-2xl font-black opacity-20 group-hover:opacity-100 transition-opacity">${s.week}</span>
+                    <div class="flex-1">
+                        <h4 class="text-xl font-bold">${s.title}</h4>
+                        <p class="opacity-50 text-sm font-light">${s.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+            applyTheme();
+            lucide.createIcons();
+        }
+
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+            applyTheme();
+        }
+
+        function applyTheme() {
+            const body = document.body;
+            const navbar = document.getElementById('navbar');
+            const footer = document.getElementById('footer');
+            const themeIcon = document.getElementById('theme-icon');
+            const logoBorder = document.querySelector('.logo-border');
+            const contactBtn = document.querySelector('.contact-btn');
+            
+            if (darkMode) {
+                body.classList.add('dark');
+                navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-black text-white border-white/10 border-b";
+                footer.className = "py-24 px-6 bg-black text-white border-white/10 border-t";
+                themeIcon.setAttribute('data-lucide', 'sun');
+                logoBorder.classList.replace('border-black', 'border-white');
+                contactBtn.className = "contact-link contact-btn px-5 py-2 text-sm font-bold border border-white text-white hover:bg-white hover:text-black transition-all uppercase tracking-widest no-underline";
+            } else {
+                body.classList.remove('dark');
+                navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b";
+                footer.className = "py-24 px-6 bg-white text-black border-black/5 border-t";
+                themeIcon.setAttribute('data-lucide', 'moon');
+                logoBorder.classList.replace('border-white', 'border-black');
+                contactBtn.className = "contact-link contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest no-underline";
+            }
+            lucide.createIcons();
+        }
+        init();
+    </script>
+</body>
+</html>
