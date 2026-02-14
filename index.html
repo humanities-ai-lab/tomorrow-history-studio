@@ -20,7 +20,7 @@
             color: #fff;
         }
 
-        /* 改成以黑白色為主的反白效果 */
+        /* 黑白色為主的反白效果 */
         ::selection {
             background-color: #000;
             color: #fff;
@@ -31,7 +31,6 @@
             color: #000;
         }
 
-        /* 隱藏原生滾動條但保留功能 */
         ::-webkit-scrollbar {
             width: 0px;
         }
@@ -41,42 +40,44 @@
         }
     </style>
 </head>
-<body class="dark transition-colors duration-500">
-    <!-- Progress Bar 移除 -->
-
+<body class="light-mode transition-colors duration-500">
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-colors duration-200 bg-black text-white border-white/10 border-b">
+    <nav id="navbar" class="fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b">
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('home')">
-                    <div class="w-8 h-8 flex items-center justify-center border border-white">
+                    <div class="logo-border w-8 h-8 flex items-center justify-center border border-black">
                         <i data-lucide="landmark" class="w-5 h-5"></i>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col text-left">
                         <span class="font-bold text-lg tracking-widest leading-none">明日歷史</span>
                         <span class="text-[9px] tracking-tighter uppercase opacity-50">Tomorrow History</span>
                     </div>
                 </div>
 
                 <!-- Desktop Nav -->
-                <div class="hidden md:flex items-center space-x-12">
-                    <button onclick="showPage('home')" class="nav-link text-sm tracking-widest hover:opacity-100 transition-opacity opacity-100 font-bold" data-page="home">首頁</button>
-                    <button onclick="showPage('members')" class="nav-link text-sm tracking-widest hover:opacity-100 transition-opacity opacity-40" data-page="members">成員</button>
-                    <button onclick="showPage('courses')" class="nav-link text-sm tracking-widest hover:opacity-100 transition-opacity opacity-40" data-page="courses">課程</button>
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="showPage('home')" class="nav-link nav-btn text-sm tracking-widest opacity-100 font-bold" data-page="home" id="text-navHome">首頁</button>
+                    <button onclick="showPage('members')" class="nav-link nav-btn text-sm tracking-widest opacity-40" data-page="members" id="text-navMembers">成員</button>
+                    <button onclick="showPage('courses')" class="nav-link nav-btn text-sm tracking-widest opacity-40" data-page="courses" id="text-navCourses">課程</button>
                     
+                    <div class="flex items-center border border-current rounded-md overflow-hidden text-[10px] font-bold">
+                        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2 py-1 bg-black text-white">ZH</button>
+                        <button onclick="setLanguage('en')" id="lang-en" class="px-2 py-1">EN</button>
+                    </div>
+
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
-                        <i id="theme-icon" data-lucide="sun" size="18"></i>
+                        <i id="theme-icon" data-lucide="moon" size="18"></i>
                     </button>
                     
-                    <button class="contact-btn px-5 py-2 text-sm font-bold border border-white text-white hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                    <button class="contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest" id="text-navContact">
                         聯繫我們
                     </button>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center space-x-6">
+                <div class="md:hidden flex items-center space-x-4">
                     <button onclick="toggleDarkMode()" class="opacity-50">
-                        <i id="theme-icon-mobile" data-lucide="sun" size="18"></i>
+                        <i id="theme-icon-mobile" data-lucide="moon" size="18"></i>
                     </button>
                     <button onclick="toggleMobileMenu()">
                         <i id="menu-icon" data-lucide="menu" size="24"></i>
@@ -85,38 +86,40 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-black px-6 pb-10 border-b border-white/10">
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-10 border-b border-black/5">
             <div class="flex flex-col space-y-6 pt-6">
-                <button onclick="showPage('home')" class="text-left text-2xl font-bold tracking-widest">首頁</button>
-                <button onclick="showPage('members')" class="text-left text-2xl font-bold tracking-widest">成員</button>
-                <button onclick="showPage('courses')" class="text-left text-2xl font-bold tracking-widest">課程</button>
-                <button class="w-full py-4 text-center border border-white font-bold">聯繫我們</button>
+                <button onclick="showPage('home')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileHome">首頁</button>
+                <button onclick="showPage('members')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileMembers">成員</button>
+                <button onclick="showPage('courses')" class="text-left text-2xl font-bold tracking-widest" id="text-mobileCourses">課程</button>
+                <div class="flex space-x-4 pt-4">
+                    <button onclick="setLanguage('zh')" class="font-bold border-b-2 border-current">中文</button>
+                    <button onclick="setLanguage('en')" class="font-bold opacity-40">English</button>
+                </div>
+                <button class="w-full py-4 text-center border border-black font-bold" id="text-mobileContact">聯繫我們</button>
             </div>
         </div>
     </nav>
 
     <main id="main-content" class="page-transition">
-        <!-- Home Page Content -->
         <div id="page-home">
             <section class="pt-48 pb-32 px-6">
                 <div class="max-w-6xl mx-auto">
                     <div class="flex items-center space-x-2 mb-8 opacity-40">
                         <i data-lucide="graduation-cap" size="16"></i>
-                        <span class="text-xs font-bold tracking-[0.2em] uppercase">National Cheng Kung University</span>
+                        <span class="text-xs font-bold tracking-[0.2em] uppercase" id="text-heroSub">National Cheng Kung University</span>
                     </div>
-                    <h1 class="text-6xl md:text-9xl font-black mb-10 tracking-tight leading-[0.9]">
+                    <h1 class="text-6xl md:text-9xl font-black mb-10 tracking-tight leading-[0.9]" id="text-heroTitle">
                         讓歷史成為<br />
                         <span class="opacity-40">未來的養分</span>
                     </h1>
-                    <p class="text-xl md:text-2xl max-w-2xl opacity-80 leading-relaxed mb-16 font-light">
-                        明日歷史工作室，專注於新時代多媒體工具。 我們跨越 Podcast、遊戲與數位人文，重塑歷史在當代的樣貌。
+                    <p class="text-xl md:text-2xl max-w-2xl opacity-80 leading-relaxed mb-16 font-light" id="text-heroDesc">
+                        明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文，重塑歷史在當代的樣貌。
                     </p>
                     <div class="flex space-x-8 items-center">
-                        <button class="px-10 py-5 text-sm font-bold tracking-widest border bg-white text-black hover:opacity-80 transition-all uppercase">
+                        <button class="px-10 py-5 text-sm font-bold tracking-widest border bg-black text-white hover:opacity-80 transition-all uppercase" id="text-heroCTA">
                             探索作品集
                         </button>
-                        <button class="text-sm font-bold tracking-widest uppercase flex items-center group opacity-80 hover:opacity-100">
+                        <button class="text-sm font-bold tracking-widest uppercase flex items-center group opacity-80 hover:opacity-100" id="text-heroContact">
                             聯繫我們 <i data-lucide="chevron-right" size="16" class="ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
@@ -127,56 +130,35 @@
                 <div class="max-w-6xl mx-auto">
                     <div class="mb-20">
                         <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-4">Core Sections</h2>
-                        <h2 class="text-4xl font-bold">專業分組</h2>
+                        <h2 class="text-4xl font-bold" id="text-sectionTitle">專業分組</h2>
                     </div>
-                    
-                    <div id="group-list">
-                        <!-- Groups items injected here -->
-                    </div>
+                    <div id="group-list"></div>
                 </div>
             </section>
         </div>
 
-        <!-- Members Page -->
         <div id="page-members" class="hidden">
             <div class="pt-48 pb-32 px-6 min-h-screen">
                 <div class="max-w-6xl mx-auto">
                     <div class="mb-24">
                         <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-4">The Team</h2>
-                        <h2 class="text-6xl font-black">團隊成員</h2>
+                        <h2 class="text-6xl font-black" id="text-memberTitle">團隊成員</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
-                        <div class="p-12 border border-white/20">
-                            <span class="text-xs font-black tracking-[0.3em] uppercase text-red-600 mb-6 block">指導老師</span>
-                            <h3 class="text-5xl font-black mb-6 tracking-wider">張哲維</h3>
-                            <p class="text-lg opacity-90 leading-relaxed font-medium">國立成功大學歷史學系<br/>助理教授</p>
-                        </div>
-                        <div class="p-12 border border-white/20">
-                            <span class="text-xs font-black tracking-[0.3em] uppercase text-red-600 mb-6 block">管理人</span>
-                            <h3 class="text-5xl font-black mb-6 tracking-wider">蕭永宜</h3>
-                            <p class="text-lg opacity-90 leading-relaxed font-medium">工作室運作與案件<br/>對接執行核心</p>
-                        </div>
-                        <div class="p-12 border border-white/20">
-                            <span class="text-xs font-black tracking-[0.3em] uppercase text-red-600 mb-6 block">總設計師</span>
-                            <h3 class="text-5xl font-black mb-6 tracking-wider">侯欽祐</h3>
-                            <p class="text-lg opacity-90 leading-relaxed font-medium">多媒體視覺與<br/>創意內容總監</p>
-                        </div>
-                    </div>
+                    <div id="member-list" class="grid grid-cols-1 md:grid-cols-3 gap-px bg-current/10"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Course Page -->
         <div id="page-courses" class="hidden">
             <div class="pt-48 pb-32 px-6 min-h-screen">
                 <div class="max-w-6xl mx-auto text-center">
-                    <h2 class="text-8xl font-black mb-8 uppercase opacity-100">Under Construction</h2>
+                    <h2 class="text-8xl font-black mb-8 uppercase opacity-100" id="text-courseUnder">Under Construction</h2>
                     <div class="p-20 border-4 border-dashed border-current">
-                        <h3 class="text-5xl font-black mb-6">課程頁面建置中</h3>
-                        <p class="max-w-lg mx-auto text-xl font-bold mb-10 opacity-100">
+                        <h3 class="text-5xl font-black mb-6" id="text-courseTitle">課程頁面建置中</h3>
+                        <p class="max-w-lg mx-auto text-xl font-bold mb-10 opacity-100" id="text-courseDesc">
                             我們正在整理成大歷史系數位人文、史料視覺化等實務課程的精華內容。
                         </p>
-                        <button class="px-10 py-5 text-sm font-black tracking-widest border-2 border-current hover:bg-current hover:invert transition-all">
+                        <button class="px-10 py-5 text-sm font-black tracking-widest border-2 border-current hover:bg-current hover:invert transition-all" id="text-courseSoon">
                             即將推出
                         </button>
                     </div>
@@ -185,27 +167,27 @@
         </div>
     </main>
 
-    <footer id="footer" class="py-24 px-6 bg-black text-white border-white/10 border-t">
+    <footer id="footer" class="py-24 px-6 bg-white text-black border-black/5 border-t">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
                     <div class="flex items-center space-x-3 mb-8">
-                        <div class="w-10 h-10 flex items-center justify-center border border-white">
+                        <div class="logo-border-footer w-10 h-10 flex items-center justify-center border border-black">
                             <i data-lucide="landmark"></i>
                         </div>
-                        <span class="font-bold text-2xl tracking-tighter">明日歷史工作室</span>
+                        <span class="font-bold text-2xl tracking-tighter" id="text-footerTitle">明日歷史工作室</span>
                     </div>
                     <div class="space-y-2 text-xs font-bold tracking-[0.1em] opacity-30 uppercase">
-                        <p>National Cheng Kung University Department of History</p>
-                        <p>Assistant Professor Chang Che-Wei Lab</p>
+                        <p id="text-footerDept">National Cheng Kung University Department of History</p>
+                        <p id="text-footerLab">Assistant Professor Chang Che-Wei Lab</p>
                     </div>
                 </div>
                 <div class="mt-12 md:mt-0 text-right">
                     <p class="text-sm opacity-40 mb-2">thstudio.ncku@gmail.com</p>
-                    <p class="text-sm font-bold">台南市東區大學路1號 光復校區歷史系</p>
+                    <p class="text-sm font-bold" id="text-footerAddr">台南市東區大學路1號 光復校區歷史系</p>
                 </div>
             </div>
-            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-[10px] tracking-widest uppercase opacity-20">
+            <div class="mt-20 pt-8 border-t border-current/5 flex flex-col md:flex-row justify-between text-[10px] tracking-widest uppercase opacity-20">
                 <p>© 2026 Tomorrow History Studio</p>
                 <p>Managed by Hou Chin-Yu</p>
             </div>
@@ -213,56 +195,140 @@
     </footer>
 
     <script>
-        // --- State Management ---
-        let darkMode = localStorage.getItem('theme') !== 'light';
+        let darkMode = localStorage.getItem('theme') === 'dark';
+        let lang = localStorage.getItem('lang') || 'zh';
         let currentPage = 'home';
 
-        // --- Data ---
-        const groups = [
-            { title: "玩法組", icon: "gamepad-2", description: "展覽互動、遊戲化、桌遊設計。將史料轉化為趣味體驗。" },
-            { title: "聲音組", icon: "mic-2", description: "Podcast 製作、錄音剪輯、配樂企劃。聽見歷史的流動。" },
-            { title: "美術組", icon: "palette", description: "視覺設計、插畫漫畫、攝影、影片美術。建立專屬視覺語彙。" },
-            { title: "考據組", icon: "search", description: "史料查找、資料校對。我們是內容品質與真實性的守護者。" },
-            { title: "口述組", icon: "headphones", description: "訪談企劃、口述歷史。在時間消失前，紀錄下最真實的記憶。" },
-            { title: "行銷組", icon: "share-2", description: "社群經營、宣傳文案、活動曝光。推廣歷史至更廣的受眾。" }
-        ];
+        const content = {
+            zh: {
+                navHome: "首頁", navMembers: "成員", navCourses: "課程", navContact: "聯繫我們",
+                heroSub: "National Cheng Kung University",
+                heroTitle: "讓歷史成為<br /><span class='opacity-40'>未來的養分</span>",
+                heroDesc: "明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文，重塑歷史在當代的樣貌。",
+                heroCTA: "探索作品集", heroContact: "聯繫我們",
+                sectionTitle: "專業分組", memberTitle: "團隊成員",
+                courseUnder: "Under Construction", courseTitle: "課程頁面建置中",
+                courseDesc: "我們正在整理成大歷史系數位人文、史料視覺化等實務課程的精華內容。",
+                courseSoon: "即將推出", footerTitle: "明日歷史工作室",
+                footerDept: "National Cheng Kung University Department of History",
+                footerLab: "Assistant Professor Chang Che-Wei Lab",
+                footerAddr: "台南市東區大學路1號 光復校區歷史系"
+            },
+            en: {
+                navHome: "HOME", navMembers: "MEMBERS", navCourses: "COURSES", navContact: "CONTACT",
+                heroSub: "National Cheng Kung University",
+                heroTitle: "HISTORY AS<br /><span class='opacity-40'>FUTURE SEED</span>",
+                heroDesc: "Tomorrow History Studio focuses on new media tools. We bridge Podcast, Gaming, and Digital Humanities to reshape history in the modern era.",
+                heroCTA: "EXPLORE PORTFOLIO", heroContact: "CONTACT US",
+                sectionTitle: "DEPARTMENTS", memberTitle: "THE TEAM",
+                courseUnder: "UNDER CONSTRUCTION", courseTitle: "Course Page Under Construction",
+                courseDesc: "We are curating core content from NCKU History digital humanities and visualization courses.",
+                courseSoon: "COMING SOON", footerTitle: "Tomorrow History Studio",
+                footerDept: "National Cheng Kung University Department of History",
+                footerLab: "Assistant Professor Chang Che-Wei Lab",
+                footerAddr: "No. 1, University Road, East District, Tainan City"
+            }
+        };
 
-        // --- Initialization ---
+        const groupsData = {
+            zh: [
+                { title: "玩法組", icon: "gamepad-2", description: "展覽互動、遊戲化、桌遊設計。將史料轉化為趣味體驗。" },
+                { title: "聲音組", icon: "mic-2", description: "Podcast 製作、錄音剪輯、配樂企劃。聽見歷史的流動。" },
+                { title: "美術組", icon: "palette", description: "視覺設計、插畫漫畫、攝影、影片美術。建立專屬視覺語彙。" },
+                { title: "考據組", icon: "search", description: "史料查找、資料校對。我們是內容品質與真實性的守護者。" },
+                { title: "口述組", icon: "headphones", description: "訪談企劃、口述歷史。在時間消失前，紀錄下最真實的記憶。" },
+                { title: "行銷組", icon: "share-2", description: "社群經營、宣傳文案、活動曝光。推廣歷史至更廣的受眾。" }
+            ],
+            en: [
+                { title: "Gameplay", icon: "gamepad-2", description: "Interactive exhibition, gamification, board game design." },
+                { title: "Audio", icon: "mic-2", description: "Podcast production, sound design, scoring." },
+                { title: "Art & Design", icon: "palette", description: "Visual design, illustration, cinematography." },
+                { title: "Research", icon: "search", description: "Historical research and fact-checking." },
+                { title: "Oral History", icon: "headphones", description: "Interview planning, oral history." },
+                { title: "Marketing", icon: "share-2", description: "Community management, copywriting, event promotion." }
+            ]
+        };
+
+        const teamData = {
+            zh: [
+                { role: "指導老師", name: "張哲維", desc: "國立成功大學歷史學系 助理教授" },
+                { role: "管理人", name: "蕭永宜", desc: "工作室運作與案件對接執行核心" },
+                { role: "總設計師", name: "侯欽祐", desc: "多媒體視覺與創意內容總監" }
+            ],
+            en: [
+                { role: "Advisor", name: "Chang Che-Wei", desc: "Assistant Professor, Dept. of History, NCKU" },
+                { role: "Manager", name: "Hsiao Yung-Yi", desc: "Core executive for operations" },
+                { role: "Lead Designer", name: "Hou Chin-Yu", desc: "Director of creative content" }
+            ]
+        };
+
         function init() {
-            renderGroups();
+            applyLanguage();
             applyTheme();
             lucide.createIcons();
-            
-            window.addEventListener('scroll', handleScroll);
-            handleScroll();
+        }
+
+        function setLanguage(l) {
+            lang = l;
+            localStorage.setItem('lang', l);
+            applyLanguage();
+            // Update Lang Toggle Buttons
+            document.getElementById('lang-zh').className = l === 'zh' ? 'px-2 py-1 bg-black text-white' : 'px-2 py-1';
+            document.getElementById('lang-en').className = l === 'en' ? 'px-2 py-1 bg-black text-white' : 'px-2 py-1';
+            if (darkMode) {
+                document.getElementById('lang-zh').className = l === 'zh' ? 'px-2 py-1 bg-white text-black' : 'px-2 py-1';
+                document.getElementById('lang-en').className = l === 'en' ? 'px-2 py-1 bg-white text-black' : 'px-2 py-1';
+            }
+        }
+
+        function applyLanguage() {
+            const c = content[lang];
+            for (let key in c) {
+                const el = document.getElementById('text-' + key);
+                if (el) el.innerHTML = c[key];
+            }
+            // Update Mobile
+            document.getElementById('text-mobileHome').innerText = c.navHome;
+            document.getElementById('text-mobileMembers').innerText = c.navMembers;
+            document.getElementById('text-mobileCourses').innerText = c.navCourses;
+            document.getElementById('text-mobileContact').innerText = c.navContact;
+
+            renderGroups();
+            renderMembers();
         }
 
         function renderGroups() {
             const container = document.getElementById('group-list');
-            container.innerHTML = groups.map(group => `
+            container.innerHTML = groupsData[lang].map(group => `
                 <div class="py-12 border-b ${darkMode ? 'border-white/20' : 'border-black/10'} group">
                     <div class="flex flex-col md:flex-row md:items-center justify-between">
                         <div class="flex items-center space-x-6 mb-4 md:mb-0">
-                            <div class="opacity-60 group-hover:opacity-100 transition-opacity">
-                                <i data-lucide="${group.icon}" size="28"></i>
-                            </div>
+                            <div class="opacity-60 group-hover:opacity-100 transition-opacity"><i data-lucide="${group.icon}" size="28"></i></div>
                             <h3 class="text-3xl font-bold tracking-wider">${group.title}</h3>
                         </div>
-                        <p class="text-base opacity-60 max-w-md md:text-right group-hover:opacity-100 transition-opacity">
-                            ${group.description}
-                        </p>
+                        <p class="text-base opacity-60 max-w-md md:text-right group-hover:opacity-100 transition-opacity">${group.description}</p>
                     </div>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        // --- UI Interactions ---
+        function renderMembers() {
+            const container = document.getElementById('member-list');
+            container.innerHTML = teamData[lang].map(m => `
+                <div class="p-12 border ${darkMode ? 'border-white/20' : 'border-black/10'}">
+                    <span class="text-xs font-black tracking-[0.3em] uppercase text-red-600 mb-6 block">${m.role}</span>
+                    <h3 class="text-5xl font-black mb-6 tracking-wider">${m.name}</h3>
+                    <p class="text-lg opacity-90 leading-relaxed font-medium">${m.desc}</p>
+                </div>
+            `).join('');
+        }
+
         function toggleDarkMode() {
             darkMode = !darkMode;
             localStorage.setItem('theme', darkMode ? 'dark' : 'light');
             applyTheme();
-            renderGroups(); // Re-render to update border colors
+            setLanguage(lang); // Refresh toggle button colors
         }
 
         function applyTheme() {
@@ -270,61 +336,45 @@
             const navbar = document.getElementById('navbar');
             const footer = document.getElementById('footer');
             const themeIcons = [document.getElementById('theme-icon'), document.getElementById('theme-icon-mobile')];
+            const logoBorders = document.querySelectorAll('.logo-border, .logo-border-footer');
             const contactBtns = document.querySelectorAll('.contact-btn');
-            
+            const mobileMenu = document.getElementById('mobile-menu');
+
             if (darkMode) {
                 body.classList.add('dark');
                 navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-black text-white border-white/10 border-b";
                 footer.className = "py-24 px-6 bg-black text-white border-white/10 border-t";
+                mobileMenu.className = "hidden md:hidden bg-black text-white px-6 pb-10 border-b border-white/10";
                 themeIcons.forEach(i => i.setAttribute('data-lucide', 'sun'));
-                contactBtns.forEach(btn => {
-                    btn.className = "contact-btn px-5 py-2 text-sm font-bold border border-white text-white hover:bg-white hover:text-black transition-all uppercase tracking-widest";
-                });
+                logoBorders.forEach(b => b.classList.replace('border-black', 'border-white'));
+                contactBtns.forEach(btn => btn.className = "contact-btn px-5 py-2 text-sm font-bold border border-white text-white hover:bg-white hover:text-black transition-all uppercase tracking-widest");
             } else {
                 body.classList.remove('dark');
                 navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b";
                 footer.className = "py-24 px-6 bg-white text-black border-black/5 border-t";
+                mobileMenu.className = "hidden md:hidden bg-white text-black px-6 pb-10 border-b border-black/5";
                 themeIcons.forEach(i => i.setAttribute('data-lucide', 'moon'));
-                contactBtns.forEach(btn => {
-                    btn.className = "contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest";
-                });
+                logoBorders.forEach(b => b.classList.replace('border-white', 'border-black'));
+                contactBtns.forEach(btn => btn.className = "contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest");
             }
             lucide.createIcons();
+            renderGroups();
+            renderMembers();
         }
 
         function showPage(pageId) {
             currentPage = pageId;
-            const pages = ['home', 'members', 'courses'];
-            pages.forEach(p => {
-                document.getElementById(`page-${p}`).classList.add('hidden');
-            });
+            ['home', 'members', 'courses'].forEach(p => document.getElementById(`page-${p}`).classList.add('hidden'));
             document.getElementById(`page-${pageId}`).classList.remove('hidden');
-            
-            // Update Nav Links
             document.querySelectorAll('.nav-link').forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.remove('opacity-40');
-                    link.classList.add('opacity-100', 'font-bold');
-                } else {
-                    link.classList.remove('opacity-100', 'font-bold');
-                    link.classList.add('opacity-40');
-                }
+                if (link.getAttribute('data-page') === pageId) { link.classList.remove('opacity-40'); link.classList.add('opacity-100', 'font-bold'); }
+                else { link.classList.remove('opacity-100', 'font-bold'); link.classList.add('opacity-40'); }
             });
-
-            // Close mobile menu
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo(0, 0);
         }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function handleScroll() {
-            // Progress bar logic removed
-        }
-
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         init();
     </script>
 </body>
