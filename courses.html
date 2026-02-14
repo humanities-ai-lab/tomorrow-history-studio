@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程資訊 | 明日歷史工作室</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="light-mode">
+    <header>
+        <nav>
+            <a href="index.html" class="logo" style="color: white; text-decoration: none;">明日歷史工作室</a>
+            <ul>
+                <li><a href="index.html" class="nav-btn">返回首頁</a></li>
+                <li><button id="theme-toggle" class="theme-btn"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>課程資訊</h2>
+        <p>此頁面內容正在規劃中。未來我們將在此展示與國立成功大學歷史學系相關的數位人文、多媒體創作及歷史科普課程。</p>
+        <div style="margin-top: 2rem; padding: 2rem; border: 2px dashed #ccc; text-align: center;">
+            <i class="fas fa-tools" style="font-size: 3rem; color: #999; margin-bottom: 1rem;"></i>
+            <p>Coming Soon...</p>
+        </div>
+    </section>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light-mode';
+        body.className = savedTheme;
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark-mode');
+            const newTheme = isDark ? 'light-mode' : 'dark-mode';
+            body.className = newTheme;
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark-mode') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>
