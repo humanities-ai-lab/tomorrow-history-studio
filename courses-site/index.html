@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>史學研究的數位工具 | 明日歷史工作室</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { accent: '#8333e9' }
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
         body { font-family: 'Inter', "PingFang TC", "Microsoft JhengHei", sans-serif; }
-        .dark { background-color: #000; color: #fff; }
-        ::selection { background-color: #000; color: #fff; }
-        .dark ::selection { background-color: #fff; color: #000; }
+        .hero-title { line-height: 1.05; letter-spacing: -0.02em; }
+        ::selection { background-color: #8333e9; color: #fff; }
         ::-webkit-scrollbar { width: 0px; }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="light-mode transition-colors duration-500">
-    <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b">
+<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/5 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='../index.html'">
-                    <div class="logo-border w-8 h-8 flex items-center justify-center border border-black">
+                    <div class="w-8 h-8 flex items-center justify-center border border-current rounded-sm">
                         <i data-lucide="landmark" class="w-5 h-5"></i>
                     </div>
                     <div class="flex flex-col text-left">
@@ -32,83 +39,60 @@
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="../index.html" class="text-sm tracking-widest opacity-40 hover:opacity-100 font-bold no-underline">首頁</a>
+                    <a href="../index.html" class="text-sm tracking-widest opacity-40 hover:opacity-100 font-bold no-underline">返回首頁</a>
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
                         <i id="theme-icon" data-lucide="moon" size="18"></i>
                     </button>
-                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest no-underline">
-                        聯繫我們
-                    </a>
+                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-btn px-5 py-2 text-sm font-bold border border-current hover:bg-accent hover:text-white hover:border-accent transition-all uppercase tracking-widest no-underline rounded-sm">聯繫我們</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <main>
-        <!-- Hero Section -->
-        <section class="pt-48 pb-24 px-6">
+        <section class="pt-48 pb-32 px-6 bg-stone-50 dark:bg-zinc-950 transition-colors duration-500">
             <div class="max-w-6xl mx-auto">
-                <div class="flex items-center space-x-2 mb-8 opacity-40">
+                <div class="flex items-center space-x-2 mb-8 text-accent opacity-80">
                     <i data-lucide="book-open" size="16"></i>
                     <span class="text-xs font-bold tracking-[0.2em] uppercase">114學年度下學期 歷史學系選修</span>
                 </div>
-                <h1 class="text-6xl md:text-8xl font-black mb-10 tracking-tight leading-[0.9]">
-                    史學研究的<br />
-                    <span class="opacity-40">數位工具</span>
-                </h1>
-                <p class="text-xl md:text-2xl max-w-3xl opacity-80 leading-relaxed font-light">
-                    這不僅是一門工具課。我們將從「人文科學知識本體論」出發，結合卡片盒筆記法與現代數位工具，重塑你在數位時代的研究思維。
+                <h1 class="hero-title text-6xl md:text-8xl lg:text-9xl font-black mb-10 tracking-tight">史學研究的<br /><span class="opacity-40">數位工具</span></h1>
+                <p class="text-xl md:text-2xl max-w-3xl opacity-70 leading-relaxed font-light mb-16">
+                    這不僅是一門工具課。我們將從「人文科學知識本體論」出發，結合卡片盒筆記法與現代數位工具，試圖重塑你在數位時代的研究思維。
                 </p>
-                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div>
-                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">授課教師</span>
-                        <p class="text-xl font-bold">張哲維 助理教授</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="p-8 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl">
+                        <span class="text-[10px] font-black tracking-widest uppercase text-accent mb-2 block border-b border-accent/10 pb-2">授課教師</span>
+                        <p class="text-2xl font-black">張哲維 教授</p>
                     </div>
-                    <div>
-                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">學分數</span>
-                        <p class="text-xl font-bold">3 學分</p>
+                    <div class="p-8 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl">
+                        <span class="text-[10px] font-black tracking-widest uppercase text-accent mb-2 block border-b border-accent/10 pb-2">學分數</span>
+                        <p class="text-2xl font-black">3 學分</p>
                     </div>
-                    <div>
-                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">預估人數</span>
-                        <p class="text-xl font-bold">60 人</p>
+                    <div class="p-8 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl">
+                        <span class="text-[10px] font-black tracking-widest uppercase text-accent mb-2 block border-b border-accent/10 pb-2">預估人數</span>
+                        <p class="text-2xl font-black">60 人</p>
                     </div>
-                    <div>
-                        <span class="text-[10px] font-black tracking-widest uppercase text-red-600 block mb-2">實作核心</span>
-                        <p class="text-xl font-bold">Obsidian / AI</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Goals -->
-        <section class="py-24 px-6 bg-current/5">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-12">Course Goals</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                    <div>
-                        <h3 class="text-3xl font-black mb-6">數位思維與筆記</h3>
-                        <p class="opacity-70 leading-relaxed">以數位化筆記為基礎，將 Workflowy、Logseq、Obsidian 等軟體作為核心，實踐「卡片盒筆記法」，快速建構個人知識圖譜。</p>
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-black mb-6">數據分析與可視化</h3>
-                        <p class="opacity-70 leading-relaxed">掌握 QGIS、Gephi、MySQL 等工具，應用於社會網絡分析與地理資訊管理，將繁瑣史料轉化為直觀的研究成果。</p>
+                    <div class="p-8 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl">
+                        <span class="text-[10px] font-black tracking-widest uppercase text-accent mb-2 block border-b border-accent/10 pb-2">實作核心</span>
+                        <p class="text-2xl font-black">Obsidian / AI</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Syllabus -->
-        <section class="py-24 px-6">
+        <section class="py-32 px-6 bg-white dark:bg-black transition-colors duration-500">
             <div class="max-w-6xl mx-auto">
-                <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-12">Syllabus</h2>
-                <div id="syllabus-list" class="space-y-4">
-                    <!-- Weekly items injected here -->
+                <div class="mb-20">
+                    <h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-4">Course Syllabus</h2>
+                    <h2 class="text-4xl font-black">課程進度表</h2>
                 </div>
+                <div id="syllabus-list" class="divide-y divide-current/10 border-t border-current/10"></div>
             </div>
         </section>
     </main>
 
-    <footer id="footer" class="py-24 px-6 bg-white text-black border-black/5 border-t">
+    <footer class="py-24 px-6 bg-stone-50 dark:bg-zinc-950 border-t border-black/5 dark:border-white/10 transition-colors duration-500">
         <div class="max-w-6xl mx-auto text-center opacity-20 text-[10px] tracking-widest uppercase">
             <p>© 2026 Tomorrow History Studio | NCKU History</p>
         </div>
@@ -140,11 +124,13 @@
         function init() {
             const container = document.getElementById('syllabus-list');
             container.innerHTML = syllabus.map(s => `
-                <div class="flex items-center space-x-8 py-6 border-b border-current/10 group">
-                    <span class="text-2xl font-black opacity-20 group-hover:opacity-100 transition-opacity">${s.week}</span>
-                    <div class="flex-1">
-                        <h4 class="text-xl font-bold">${s.title}</h4>
-                        <p class="opacity-50 text-sm font-light">${s.desc}</p>
+                <div class="py-12 flex flex-col md:flex-row md:items-center justify-between group hover:bg-current/[0.01] transition-all">
+                    <div class="flex items-center space-x-8">
+                        <span class="text-3xl font-black text-accent opacity-20 group-hover:opacity-100 transition-opacity">${s.week}</span>
+                        <div class="text-left">
+                            <h4 class="text-2xl font-black mb-2">${s.title}</h4>
+                            <p class="opacity-50 text-base font-medium">${s.desc}</p>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -152,35 +138,13 @@
             lucide.createIcons();
         }
 
-        function toggleDarkMode() {
-            darkMode = !darkMode;
-            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-            applyTheme();
-        }
+        function toggleDarkMode() { darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); applyTheme(); }
 
         function applyTheme() {
-            const body = document.body;
-            const navbar = document.getElementById('navbar');
-            const footer = document.getElementById('footer');
+            const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
-            const logoBorder = document.querySelector('.logo-border');
-            const contactBtn = document.querySelector('.contact-btn');
-            
-            if (darkMode) {
-                body.classList.add('dark');
-                navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-black text-white border-white/10 border-b";
-                footer.className = "py-24 px-6 bg-black text-white border-white/10 border-t";
-                themeIcon.setAttribute('data-lucide', 'sun');
-                logoBorder.classList.replace('border-black', 'border-white');
-                contactBtn.className = "contact-link contact-btn px-5 py-2 text-sm font-bold border border-white text-white hover:bg-white hover:text-black transition-all uppercase tracking-widest no-underline";
-            } else {
-                body.classList.remove('dark');
-                navbar.className = "fixed w-full z-50 transition-colors duration-200 bg-white text-black border-black/5 border-b";
-                footer.className = "py-24 px-6 bg-white text-black border-black/5 border-t";
-                themeIcon.setAttribute('data-lucide', 'moon');
-                logoBorder.classList.replace('border-white', 'border-black');
-                contactBtn.className = "contact-link contact-btn px-5 py-2 text-sm font-bold border border-black text-black hover:bg-black hover:text-white transition-all uppercase tracking-widest no-underline";
-            }
+            if (darkMode) { html.classList.add('dark'); themeIcon.setAttribute('data-lucide', 'sun'); } 
+            else { html.classList.remove('dark'); themeIcon.setAttribute('data-lucide', 'moon'); }
             lucide.createIcons();
         }
         init();
