@@ -44,13 +44,13 @@
                     <button onclick="showPage('home')" class="nav-link text-sm tracking-widest opacity-100 font-bold" data-page="home" id="text-navHome">首頁</button>
                     <button onclick="showPage('members')" class="nav-link text-sm tracking-widest opacity-40 hover:opacity-100" data-page="members" id="text-navMembers">成員</button>
                     <button onclick="showPage('courses')" class="nav-link text-sm tracking-widest opacity-40 hover:opacity-100" data-page="courses" id="text-navCourses">課程</button>
-                    <button onclick="toggleLanguage()" class="text-[10px] font-black tracking-widest border border-current px-3 py-1 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all rounded-sm">
+                    <button onclick="toggleLanguage()" id="lang-toggle-btn" class="text-[10px] font-black tracking-widest border border-black px-3 py-1 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200">
                         <span id="lang-toggle-text">EN</span>
                     </button>
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
                         <i id="theme-icon" data-lucide="moon" size="18"></i>
                     </button>
-                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="px-5 py-2 text-sm font-bold border border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase tracking-widest no-underline rounded-sm" id="text-navContact">聯繫我們</a>
+                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link px-5 py-2 text-sm font-bold border border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase tracking-widest no-underline inline-block rounded-sm" id="text-navContact">聯繫我們</a>
                 </div>
                 <div class="md:hidden flex items-center space-x-4">
                     <button onclick="toggleDarkMode()" class="opacity-50"><i id="theme-icon-mobile" data-lucide="moon" size="18"></i></button>
@@ -60,11 +60,11 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black px-6 pb-10 border-b border-black/5 dark:border-white/10">
             <div class="flex flex-col space-y-6 pt-6 text-left">
-                <button onclick="showPage('home')" class="text-2xl font-bold tracking-widest">首頁</button>
-                <button onclick="showPage('members')" class="text-2xl font-bold tracking-widest">成員</button>
-                <button onclick="showPage('courses')" class="text-2xl font-bold tracking-widest">課程</button>
+                <button onclick="showPage('home')" class="text-2xl font-bold tracking-widest" id="text-mobileHome">首頁</button>
+                <button onclick="showPage('members')" class="text-2xl font-bold tracking-widest" id="text-mobileMembers">成員</button>
+                <button onclick="showPage('courses')" class="text-2xl font-bold tracking-widest" id="text-mobileCourses">課程</button>
                 <button onclick="toggleLanguage()" class="text-2xl font-bold tracking-widest flex items-center justify-between"><span id="text-mobileLangLabel">切換語言</span><span id="lang-toggle-text-mobile" class="text-sm border border-current px-2 py-1">EN</span></button>
-                <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="w-full py-4 text-center border border-current font-bold no-underline inline-block">聯繫我們</a>
+                <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="w-full py-4 text-center border border-black font-bold no-underline inline-block" id="text-mobileContact">聯繫我們</a>
             </div>
         </div>
     </nav>
@@ -80,9 +80,7 @@
                     <h1 class="hero-title text-5xl md:text-8xl lg:text-9xl font-black mb-10 tracking-tight" id="text-heroTitle">讓歷史成為<br /><span class="opacity-40">未來的養分</span></h1>
                     <p class="text-lg md:text-2xl max-w-2xl opacity-70 leading-relaxed mb-16 font-light" id="text-heroDesc">明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm" id="text-heroContact">
-                            聯繫我們
-                        </a>
+                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm" id="text-heroContact">聯繫我們</a>
                     </div>
                 </div>
             </section>
@@ -93,7 +91,6 @@
                 </div>
             </section>
         </div>
-
         <div id="page-members" class="hidden">
             <div class="pt-48 pb-32 px-6 min-h-screen bg-stone-50 dark:bg-zinc-950 transition-colors duration-500">
                 <div class="max-w-6xl mx-auto">
@@ -102,13 +99,10 @@
                 </div>
             </div>
         </div>
-
         <div id="page-courses" class="hidden">
             <div class="pt-48 pb-32 px-6 min-h-screen bg-white dark:bg-black">
                 <div class="max-w-6xl mx-auto">
-                    <div class="mb-16 text-left border-b-8 border-current pb-8">
-                        <h2 class="text-7xl md:text-9xl font-black uppercase">Courses</h2>
-                    </div>
+                    <div class="mb-16 text-left border-b-8 border-current pb-8"><h2 class="text-7xl md:text-9xl font-black uppercase">Courses</h2></div>
                     <div id="course-list" class="divide-y divide-current/10"></div>
                 </div>
             </div>
@@ -161,30 +155,29 @@
 
         function init() { applyTheme(); applyLanguage(); lucide.createIcons(); }
         function toggleDarkMode() { darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); applyTheme(); }
-        function applyTheme() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('theme-icon');
-            const themeIconMobile = document.getElementById('theme-icon-mobile');
-            if (darkMode) { html.classList.add('dark'); themeIcon.setAttribute('data-lucide', 'sun'); themeIconMobile.setAttribute('data-lucide', 'sun'); } 
-            else { html.classList.remove('dark'); themeIcon.setAttribute('data-lucide', 'moon'); themeIconMobile.setAttribute('data-lucide', 'moon'); }
-            lucide.createIcons(); renderGroups(); renderMembers(); renderCourses();
-        }
-        function toggleLanguage() { lang = lang === 'zh' ? 'en' : 'zh'; localStorage.setItem('lang', lang); applyLanguage(); applyTheme(); }
+        function toggleLanguage() { lang = lang === 'zh' ? 'en' : 'zh'; localStorage.setItem('lang', lang); applyLanguage(); }
+        
         function applyLanguage() {
             const c = content[lang];
             for (let key in c) { const el = document.getElementById('text-' + key); if (el) el.innerHTML = c[key]; }
-            document.getElementById('text-mobileHome').innerText = c.navHome;
-            document.getElementById('text-mobileMembers').innerText = c.navMembers;
-            document.getElementById('text-mobileCourses').innerText = c.navCourses;
-            document.getElementById('text-mobileContact').innerText = c.navContact;
+            
+            const mobileMap = { 'text-mobileHome': 'navHome', 'text-mobileMembers': 'navMembers', 'text-mobileCourses': 'navCourses', 'text-mobileContact': 'navContact' };
+            for (let id in mobileMap) { const el = document.getElementById(id); if (el) el.innerText = c[mobileMap[id]]; }
+
             const mobileLangLabel = document.getElementById('text-mobileLangLabel');
             if (mobileLangLabel) mobileLangLabel.innerText = lang === 'zh' ? '切換語言' : 'Language';
-            document.getElementById('lang-toggle-text').innerText = lang === 'zh' ? 'EN' : 'ZH';
-            document.getElementById('lang-toggle-text-mobile').innerText = lang === 'zh' ? 'EN' : 'ZH';
+            
+            const langBtnText = document.getElementById('lang-toggle-text');
+            if (langBtnText) langBtnText.innerText = lang === 'zh' ? 'EN' : 'ZH';
+            const langBtnTextMob = document.getElementById('lang-toggle-text-mobile');
+            if (langBtnTextMob) langBtnTextMob.innerText = lang === 'zh' ? 'EN' : 'ZH';
+
             renderGroups(); renderMembers(); renderCourses();
         }
+
         function renderGroups() {
             const container = document.getElementById('group-grid');
+            if (!container) return;
             container.innerHTML = groupsData[lang].map(group => `
                 <div class="p-8 border-2 border-current/5 bg-white dark:bg-zinc-900 hover:border-accent hover:shadow-[0_15px_40px_-12px_rgba(131,51,233,0.15)] transition-all duration-500 group rounded-2xl cursor-default">
                     <div class="mb-6 p-4 w-14 h-14 flex items-center justify-center bg-accent/5 rounded-xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500"><i data-lucide="${group.icon}" size="28"></i></div>
@@ -194,8 +187,10 @@
             `).join('');
             lucide.createIcons();
         }
+
         function renderMembers() {
             const container = document.getElementById('member-list');
+            if (!container) return;
             container.innerHTML = teamData[lang].map(m => `
                 <div class="p-10 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl team-card-shadow transition-all hover:-translate-y-1">
                     <span class="text-3xl font-black tracking-tight text-accent mb-6 block border-b border-accent/10 pb-4">${m.role}</span>
@@ -204,8 +199,10 @@
                 </div>
             `).join('');
         }
+
         function renderCourses() {
             const container = document.getElementById('course-list');
+            if (!container) return;
             container.innerHTML = coursesData[lang].map(c => `
                 <div class="py-16 flex flex-col md:flex-row md:items-center justify-between group">
                     <div class="flex-1 text-left"><span class="text-xs font-black tracking-[0.3em] text-accent mb-4 block uppercase">${c.category}</span><h3 class="text-5xl font-black mb-4 tracking-tight group-hover:text-accent transition-colors">${c.title}</h3><p class="text-xl opacity-70 font-bold">${c.desc}</p></div>
@@ -215,7 +212,29 @@
             const comingSoon = lang === 'zh' ? '更多課程正在籌備中' : 'More courses in preparation';
             container.innerHTML += `<div class="py-16 opacity-20"><p class="text-2xl font-black tracking-[0.2em] uppercase italic text-center">${comingSoon}</p></div>`;
         }
-        function showPage(pageId) { currentPage = pageId; ['home', 'members', 'courses'].forEach(p => document.getElementById(`page-${p}`).classList.add('hidden')); document.getElementById(`page-${pageId}`).classList.remove('hidden'); document.querySelectorAll('.nav-link').forEach(link => { if (link.getAttribute('data-page') === pageId) { link.classList.remove('opacity-40'); link.classList.add('opacity-100', 'font-bold'); } else { link.classList.remove('opacity-100', 'font-bold'); link.classList.add('opacity-40'); } }); document.getElementById('mobile-menu').classList.add('hidden'); scrollToTop(); }
+
+        function applyTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeIconMobile = document.getElementById('theme-icon-mobile');
+            if (darkMode) { html.classList.add('dark'); themeIcon.setAttribute('data-lucide', 'sun'); themeIconMobile.setAttribute('data-lucide', 'sun'); } 
+            else { html.classList.remove('dark'); themeIcon.setAttribute('data-lucide', 'moon'); themeIconMobile.setAttribute('data-lucide', 'moon'); }
+            lucide.createIcons();
+        }
+
+        function showPage(pageId) {
+            currentPage = pageId;
+            ['home', 'members', 'courses'].forEach(p => { const el = document.getElementById(`page-${p}`); if (el) el.classList.add('hidden'); });
+            const currentEl = document.getElementById(`page-${pageId}`);
+            if (currentEl) currentEl.classList.remove('hidden');
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('data-page') === pageId) { link.classList.remove('opacity-40'); link.classList.add('opacity-100', 'font-bold'); }
+                else { link.classList.remove('opacity-100', 'font-bold'); link.classList.add('opacity-40'); }
+            });
+            document.getElementById('mobile-menu').classList.add('hidden');
+            scrollToTop();
+            applyLanguage(); // Ensure page content is in correct language
+        }
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         init();
