@@ -80,8 +80,9 @@
                     <h1 class="hero-title text-5xl md:text-8xl lg:text-9xl font-black mb-10 tracking-tight" id="text-heroTitle">讓歷史成為<br /><span class="opacity-40">未來的養分</span></h1>
                     <p class="text-lg md:text-2xl max-w-2xl opacity-70 leading-relaxed mb-16 font-light" id="text-heroDesc">明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-                        <button onclick="showPage('courses')" class="w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current bg-current text-white dark:text-black hover:opacity-80 transition-all uppercase rounded-sm" id="text-heroCTA">探索作品集</button>
-                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm" id="text-heroContact">聯繫我們</a>
+                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm" id="text-heroContact">
+                            聯繫我們
+                        </a>
                     </div>
                 </div>
             </section>
@@ -105,7 +106,9 @@
         <div id="page-courses" class="hidden">
             <div class="pt-48 pb-32 px-6 min-h-screen bg-white dark:bg-black">
                 <div class="max-w-6xl mx-auto">
-                    <div class="mb-16 text-left border-b-8 border-current pb-8"><h2 class="text-sm font-bold tracking-[0.4em] uppercase opacity-40 mb-4">Course Catalogue</h2><h2 class="text-7xl md:text-9xl font-black uppercase">Courses</h2></div>
+                    <div class="mb-16 text-left border-b-8 border-current pb-8">
+                        <h2 class="text-7xl md:text-9xl font-black uppercase">Courses</h2>
+                    </div>
                     <div id="course-list" class="divide-y divide-current/10"></div>
                 </div>
             </div>
@@ -137,8 +140,8 @@
         let currentPage = 'home';
 
         const content = {
-            zh: { navHome: "首頁", navMembers: "成員", navCourses: "課程", navContact: "聯繫我們", heroSub: "National Cheng Kung University", heroTitle: "讓歷史成為<br /><span class='opacity-40'>未來的養分</span>", heroDesc: "明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。", heroCTA: "探索作品集", heroContact: "聯繫我們", sectionTitle: "專業分組", memberSub: "Our Teammates", memberTitle: "團隊成員", footerTitle: "明日歷史工作室", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "台南市東區大學路1號 光復校區歷史系" },
-            en: { navHome: "HOME", navMembers: "MEMBERS", navCourses: "COURSES", navContact: "CONTACT", heroSub: "National Cheng Kung University", heroTitle: "HISTORY AS<br /><span class='opacity-40'>FUTURE SEED</span>", heroDesc: "Tomorrow History Studio focuses on new media tools. We bridge Podcast, Gaming, and Digital Humanities to reshape history in the modern era.", heroCTA: "PORTFOLIO", heroContact: "CONTACT US", sectionTitle: "DEPARTMENTS", memberSub: "THE TEAM", memberTitle: "OUR TEAMMATES", footerTitle: "Tomorrow History Studio", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "No. 1, University Road, East District, Tainan City" }
+            zh: { navHome: "首頁", navMembers: "成員", navCourses: "課程", navContact: "聯繫我們", heroSub: "National Cheng Kung University", heroTitle: "讓歷史成為<br /><span class='opacity-40'>未來的養分</span>", heroDesc: "明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。", heroContact: "聯繫我們", sectionTitle: "專業分組", memberSub: "Our Teammates", memberTitle: "團隊成員", footerTitle: "明日歷史工作室", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "台南市東區大學路1號 光復校區歷史系" },
+            en: { navHome: "HOME", navMembers: "MEMBERS", navCourses: "COURSES", navContact: "CONTACT", heroSub: "National Cheng Kung University", heroTitle: "HISTORY AS<br /><span class='opacity-40'>FUTURE SEED</span>", heroDesc: "Tomorrow History Studio focuses on new media tools. We bridge Podcast, Gaming, and Digital Humanities to reshape history in the modern era.", heroContact: "CONTACT US", sectionTitle: "DEPARTMENTS", memberSub: "THE TEAM", memberTitle: "OUR TEAMMATES", footerTitle: "Tomorrow History Studio", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "No. 1, University Road, East District, Tainan City" }
         };
 
         const groupsData = {
@@ -195,9 +198,9 @@
             const container = document.getElementById('member-list');
             container.innerHTML = teamData[lang].map(m => `
                 <div class="p-10 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl team-card-shadow transition-all hover:-translate-y-1">
-                    <span class="text-[9px] font-black tracking-[0.2em] uppercase text-accent opacity-60 mb-4 block border-b border-accent/10 pb-2">${m.role}</span>
-                    <h3 class="text-4xl font-black mb-4 tracking-wider">${m.name}</h3>
-                    <p class="text-base opacity-60 leading-relaxed font-medium">${m.desc}</p>
+                    <span class="text-3xl font-black tracking-tight text-accent mb-6 block border-b border-accent/10 pb-4">${m.role}</span>
+                    <h3 class="text-5xl font-black mb-4 tracking-wider">${m.name}</h3>
+                    <p class="text-lg opacity-60 leading-relaxed font-medium">${m.desc}</p>
                 </div>
             `).join('');
         }
