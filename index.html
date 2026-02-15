@@ -11,120 +11,167 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { accent: '#8333e9' }
+                    colors: { accent: '#8333e9' },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                            '50%': { transform: 'translateY(-20px) scale(1.05)' },
+                        }
+                    }
                 }
             }
         }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
-        body { font-family: 'Inter', "PingFang TC", "Microsoft JhengHei", sans-serif; }
-        .hero-title { line-height: 1.05; letter-spacing: -0.02em; }
+        body { font-family: 'Inter', "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
+        
+        .bg-grain::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .hero-title { line-height: 1.05; letter-spacing: -0.04em; }
         ::selection { background-color: #8333e9; color: #fff; }
         ::-webkit-scrollbar { width: 0px; }
         html { scroll-behavior: smooth; }
-        .team-card-shadow { box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); }
-        .dark .team-card-shadow { box-shadow: 0 4px 30px -5px rgba(255,255,255,0.02); }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/5 dark:border-white/10">
+<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-700 bg-grain">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-white/70 dark:bg-black/70 backdrop-blur-xl border-b border-black/5 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToTop()">
-                    <div class="w-8 h-8 flex items-center justify-center border border-current rounded-sm">
-                        <i data-lucide="landmark" class="w-5 h-5"></i>
+            <div class="flex justify-between h-24 items-center">
+                <div class="flex items-center space-x-4 cursor-pointer group" onclick="scrollToTop()">
+                    <div class="w-10 h-10 flex items-center justify-center border-2 border-current rounded-sm group-hover:rotate-12 transition-transform duration-500">
+                        <i data-lucide="landmark" class="w-6 h-6"></i>
                     </div>
                     <div class="flex flex-col text-left">
-                        <span class="font-bold text-lg tracking-widest leading-none">明日歷史</span>
-                        <span class="text-[9px] tracking-tighter uppercase opacity-50">Tomorrow History</span>
+                        <span class="font-black text-xl tracking-widest leading-none">明日歷史</span>
+                        <span class="text-[10px] tracking-[0.2em] uppercase opacity-40">Tomorrow History</span>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <button onclick="showPage('home')" class="nav-link text-sm tracking-widest opacity-100 font-bold" data-page="home" id="text-navHome">首頁</button>
-                    <button onclick="showPage('members')" class="nav-link text-sm tracking-widest opacity-40 hover:opacity-100" data-page="members" id="text-navMembers">成員</button>
-                    <button onclick="showPage('courses')" class="nav-link text-sm tracking-widest opacity-40 hover:opacity-100" data-page="courses" id="text-navCourses">課程</button>
-                    <button onclick="toggleLanguage()" id="lang-toggle-btn" class="text-[10px] font-black tracking-widest border border-black px-3 py-1 bg-white text-black hover:bg-black hover:text-white transition-colors duration-200">
+                <div class="hidden md:flex items-center space-x-10">
+                    <button onclick="showPage('home')" class="nav-link text-xs font-bold tracking-[0.2em] uppercase opacity-100" data-page="home">Home</button>
+                    <button onclick="showPage('members')" class="nav-link text-xs font-bold tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity" data-page="members">Team</button>
+                    <button onclick="showPage('courses')" class="nav-link text-xs font-bold tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity" data-page="courses">Courses</button>
+                    <button onclick="toggleLanguage()" class="text-[10px] font-black tracking-widest border border-current px-4 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all rounded-sm">
                         <span id="lang-toggle-text">EN</span>
                     </button>
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
-                        <i id="theme-icon" data-lucide="moon" size="18"></i>
+                        <i id="theme-icon" data-lucide="moon" size="20"></i>
                     </button>
-                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link px-5 py-2 text-sm font-bold border border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase tracking-widest no-underline inline-block rounded-sm" id="text-navContact">聯繫我們</a>
+                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="px-6 py-3 text-xs font-black border-2 border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase tracking-[0.2em] no-underline rounded-sm">Contact</a>
                 </div>
-                <div class="md:hidden flex items-center space-x-4">
-                    <button onclick="toggleDarkMode()" class="opacity-50"><i id="theme-icon-mobile" data-lucide="moon" size="18"></i></button>
-                    <button onclick="toggleMobileMenu()"><i id="menu-icon" data-lucide="menu" size="24"></i></button>
+                <div class="md:hidden flex items-center space-x-6">
+                    <button onclick="toggleDarkMode()" class="opacity-50"><i id="theme-icon-mobile" data-lucide="moon" size="20"></i></button>
+                    <button onclick="toggleMobileMenu()"><i id="menu-icon" data-lucide="menu" size="28"></i></button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black px-6 pb-10 border-b border-black/5 dark:border-white/10">
-            <div class="flex flex-col space-y-6 pt-6 text-left">
-                <button onclick="showPage('home')" class="text-2xl font-bold tracking-widest" id="text-mobileHome">首頁</button>
-                <button onclick="showPage('members')" class="text-2xl font-bold tracking-widest" id="text-mobileMembers">成員</button>
-                <button onclick="showPage('courses')" class="text-2xl font-bold tracking-widest" id="text-mobileCourses">課程</button>
-                <button onclick="toggleLanguage()" class="text-2xl font-bold tracking-widest flex items-center justify-between"><span id="text-mobileLangLabel">切換語言</span><span id="lang-toggle-text-mobile" class="text-sm border border-current px-2 py-1">EN</span></button>
-                <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="w-full py-4 text-center border border-black font-bold no-underline inline-block" id="text-mobileContact">聯繫我們</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black px-8 pb-12 border-b border-black/5 dark:border-white/10">
+            <div class="flex flex-col space-y-8 pt-8 text-left italic">
+                <button onclick="showPage('home')" class="text-4xl font-black tracking-tighter">HOME</button>
+                <button onclick="showPage('members')" class="text-4xl font-black tracking-tighter">TEAM</button>
+                <button onclick="showPage('courses')" class="text-4xl font-black tracking-tighter">COURSES</button>
+                <button onclick="toggleLanguage()" class="text-xl font-bold flex items-center justify-between">
+                    <span id="text-mobileLangLabel">LANGUAGE</span>
+                    <span id="lang-toggle-text-mobile" class="border border-current px-3 py-1">EN</span>
+                </button>
+                <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="w-full py-5 text-center border-4 border-current font-black text-2xl no-underline inline-block uppercase">Contact</a>
             </div>
         </div>
     </nav>
 
     <main id="main-content">
         <div id="page-home">
-            <section class="pt-48 pb-32 px-6 bg-stone-50 dark:bg-zinc-950 transition-colors duration-500">
-                <div class="max-w-6xl mx-auto">
-                    <div class="flex items-center space-x-2 mb-8 text-accent opacity-80">
-                        <i data-lucide="graduation-cap" size="16"></i>
-                        <span class="text-xs font-bold tracking-[0.2em] uppercase" id="text-heroSub">National Cheng Kung University</span>
+            <section class="min-h-screen flex items-center pt-24 px-6 bg-[#fafafa] dark:bg-[#050505] transition-colors duration-700 relative overflow-hidden">
+                <div class="absolute top-1/4 right-[-10%] opacity-[0.05] dark:opacity-[0.1] pointer-events-none animate-float">
+                    <i data-lucide="landmark" class="w-[800px] h-[800px] text-accent"></i>
+                </div>
+                <div class="max-w-6xl mx-auto relative z-10 w-full flex flex-col items-start">
+                    <div class="flex items-center space-x-3 mb-10 text-accent reveal">
+                        <i data-lucide="graduation-cap" size="20"></i>
+                        <span class="text-sm font-black tracking-[0.4em] uppercase" id="text-heroSub">Tomorrow History Studio</span>
                     </div>
-                    <h1 class="hero-title text-5xl md:text-8xl lg:text-9xl font-black mb-10 tracking-tight" id="text-heroTitle">讓歷史成為<br /><span class="opacity-40">未來的養分</span></h1>
-                    <p class="text-lg md:text-2xl max-w-2xl opacity-70 leading-relaxed mb-16 font-light" id="text-heroDesc">明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。</p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link w-full sm:w-48 py-5 text-sm font-black tracking-widest border-2 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm" id="text-heroContact">聯繫我們</a>
+                    <h1 class="hero-title text-7xl md:text-9xl font-black mb-12 reveal text-left" id="text-heroTitle">讓歷史成為<br /><span class="opacity-20">未來的養分</span></h1>
+                    <p class="text-xl md:text-3xl max-w-3xl opacity-60 leading-relaxed mb-20 font-light reveal text-left" id="text-heroDesc">明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。</p>
+                    <div class="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-10 reveal">
+                        <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-link w-full sm:w-64 py-6 text-sm font-black tracking-[0.3em] border-4 border-current text-center no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all uppercase rounded-sm">聯繫我們</a>
                     </div>
                 </div>
             </section>
-            <section class="py-32 px-6 bg-white dark:bg-black transition-colors duration-500">
-                <div class="max-w-6xl mx-auto">
-                    <div class="mb-20"><h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-4">Our Departments</h2><h2 class="text-4xl font-black" id="text-sectionTitle">專業分組</h2></div>
-                    <div id="group-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <section class="py-40 px-6 bg-white dark:bg-black transition-colors duration-700">
+                <div class="max-w-6xl mx-auto text-center md:text-left">
+                    <div class="mb-24 reveal">
+                        <h2 class="text-xs font-black tracking-[0.5em] uppercase text-accent mb-6">Our Core Departments</h2>
+                        <h2 class="text-5xl md:text-7xl font-black tracking-tighter" id="text-sectionTitle">專業分組</h2>
+                    </div>
+                    <div id="group-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
                 </div>
             </section>
         </div>
+
         <div id="page-members" class="hidden">
-            <div class="pt-48 pb-32 px-6 min-h-screen bg-stone-50 dark:bg-zinc-950 transition-colors duration-500">
+            <div class="pt-48 pb-40 px-6 min-h-screen bg-[#f5f5f5] dark:bg-[#080808] transition-colors duration-700">
                 <div class="max-w-6xl mx-auto">
-                    <div class="mb-24"><h2 class="text-sm font-bold tracking-[0.3em] uppercase opacity-30 mb-4" id="text-memberSub">Our Teammates</h2><h2 class="text-6xl font-black" id="text-memberTitle">團隊成員</h2></div>
-                    <div id="member-list" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+                    <div class="mb-32 reveal">
+                        <h2 class="text-xs font-black tracking-[0.5em] uppercase text-accent mb-6" id="text-memberSub">Our Teammates</h2>
+                        <h2 class="text-6xl font-black tracking-tighter" id="text-memberTitle">團隊成員</h2>
+                    </div>
+                    <div id="member-list" class="grid grid-cols-1 md:grid-cols-3 gap-12"></div>
                 </div>
             </div>
         </div>
+
         <div id="page-courses" class="hidden">
-            <div class="pt-48 pb-32 px-6 min-h-screen bg-white dark:bg-black">
+            <div class="pt-48 pb-40 px-6 min-h-screen bg-white dark:bg-black transition-colors duration-700">
                 <div class="max-w-6xl mx-auto">
-                    <div class="mb-16 text-left border-b-8 border-current pb-8"><h2 class="text-7xl md:text-9xl font-black uppercase">Courses</h2></div>
+                    <div class="mb-24 text-left border-b border-current pb-12 reveal">
+                        <h2 class="text-6xl font-black uppercase tracking-tighter leading-none" id="text-coursesTitle">課程資訊</h2>
+                    </div>
                     <div id="course-list" class="divide-y divide-current/10"></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer id="footer" class="py-24 px-6 bg-white dark:bg-black border-t border-black/5 dark:border-white/10 transition-colors duration-500">
-        <div class="max-w-6xl mx-auto">
+    <footer id="footer" class="py-32 px-6 bg-white dark:bg-black border-t border-black/5 dark:border-white/10 transition-colors duration-700">
+        <div class="max-w-6xl mx-auto text-center md:text-left">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
-                <div>
-                    <div class="flex items-center space-x-3 mb-8">
-                        <div class="logo-border-footer w-10 h-10 flex items-center justify-center border border-current rounded-sm"><i data-lucide="landmark"></i></div>
-                        <span class="font-bold text-2xl tracking-tighter" id="text-footerTitle">明日歷史工作室</span>
+                <div class="reveal">
+                    <div class="flex items-center space-x-4 mb-10">
+                        <div class="w-12 h-12 flex items-center justify-center border-2 border-current rounded-sm"><i data-lucide="landmark" class="w-7 h-7"></i></div>
+                        <span class="font-black text-3xl tracking-tighter" id="text-footerTitle">明日歷史工作室</span>
                     </div>
-                    <div class="space-y-2 text-xs font-bold tracking-[0.1em] opacity-30 uppercase">
-                        <p id="text-footerDept">National Cheng Kung University Department of History</p>
+                    <div class="space-y-3 text-xs font-bold tracking-[0.2em] opacity-40 uppercase">
+                        <p id="text-footerDept">Department of History</p>
                         <p id="text-footerLab">Assistant Professor Chang Che-Wei Lab</p>
                     </div>
                 </div>
-                <div class="mt-12 md:mt-0 text-right"><p class="text-sm opacity-40 mb-2">thstudio.ncku@gmail.com</p><p class="text-sm font-bold" id="text-footerAddr">台南市東區大學路1號 光復校區歷史系</p></div>
+                <div class="mt-16 md:mt-0 text-right reveal">
+                    <p class="text-base opacity-50 mb-3 tracking-wider">thstudio.ncku@gmail.com</p>
+                    <p class="text-lg font-black tracking-tight" id="text-footerAddr">台南市東區大學路1號 光復校區歷史系</p>
+                </div>
             </div>
-            <div class="mt-20 pt-8 border-t border-current/5 flex flex-col md:flex-row justify-between text-[10px] tracking-widest uppercase opacity-20 text-center md:text-left"><p>© 2026 Tomorrow History Studio</p><p>Managed by Hou Chin-Yu</p></div>
         </div>
     </footer>
 
@@ -134,12 +181,19 @@
         let currentPage = 'home';
 
         const content = {
-            zh: { navHome: "首頁", navMembers: "成員", navCourses: "課程", navContact: "聯繫我們", heroSub: "National Cheng Kung University", heroTitle: "讓歷史成為<br /><span class='opacity-40'>未來的養分</span>", heroDesc: "明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。", heroContact: "聯繫我們", sectionTitle: "專業分組", memberSub: "Our Teammates", memberTitle: "團隊成員", footerTitle: "明日歷史工作室", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "台南市東區大學路1號 光復校區歷史系" },
-            en: { navHome: "HOME", navMembers: "MEMBERS", navCourses: "COURSES", navContact: "CONTACT", heroSub: "National Cheng Kung University", heroTitle: "HISTORY AS<br /><span class='opacity-40'>FUTURE SEED</span>", heroDesc: "Tomorrow History Studio focuses on new media tools. We bridge Podcast, Gaming, and Digital Humanities to reshape history in the modern era.", heroContact: "CONTACT US", sectionTitle: "DEPARTMENTS", memberSub: "THE TEAM", memberTitle: "OUR TEAMMATES", footerTitle: "Tomorrow History Studio", footerDept: "National Cheng Kung University Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "No. 1, University Road, East District, Tainan City" }
+            zh: { navHome: "Home", navMembers: "Team", navCourses: "Courses", navContact: "Contact", heroSub: "Tomorrow History Studio", heroTitle: "讓歷史成為<br /><span class='opacity-20'>未來的養分</span>", heroDesc: "明日歷史工作室，專注於新時代多媒體工具。我們跨越 Podcast、遊戲與數位人文等領域，試圖重塑歷史在當代的樣貌。", sectionTitle: "專業分組", memberSub: "Our Teammates", memberTitle: "團隊成員", coursesTitle: "課程資訊", footerTitle: "明日歷史工作室", footerDept: "Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "台南市東區大學路1號 光復校區歷史系" },
+            en: { navHome: "Home", navMembers: "Team", navCourses: "Courses", navContact: "Contact", heroSub: "Tomorrow History Studio", heroTitle: "HISTORY AS<br /><span class='opacity-20'>FUTURE SEED</span>", heroDesc: "Tomorrow History Studio focuses on new media tools. We bridge Podcast, Gaming, and Digital Humanities to reshape history in the modern era.", sectionTitle: "DEPARTMENTS", memberSub: "THE TEAM", memberTitle: "OUR TEAMMATES", coursesTitle: "COURSES", footerTitle: "Tomorrow History Studio", footerDept: "Department of History", footerLab: "Assistant Professor Chang Che-Wei Lab", footerAddr: "No. 1, University Road, East District, Tainan City" }
         };
 
         const groupsData = {
-            zh: [ { title: "玩法組", icon: "gamepad-2", description: "展覽互動、遊戲化、桌遊設計。將史料轉化為趣味體驗。" }, { title: "聲音組", icon: "mic-2", description: "Podcast 製作、錄音剪輯、配樂企劃。聽見歷史的流動。" }, { title: "美術組", icon: "palette", description: "視覺設計、插畫漫畫、攝影、影片美術。建立專屬視覺語彙。" }, { title: "考據組", icon: "search", description: "史料查找、資料校對。我們是內容品質與真實性的守護者。" }, { title: "口述組", icon: "headphones", description: "訪談企劃、口述歷史。在時間消失前，紀錄下最真實的記憶。" }, { title: "行銷組", icon: "share-2", description: "社群經營、宣傳文案、活動曝光。推廣歷史至更廣的受眾。" } ],
+            zh: [ 
+                { title: "玩法組", icon: "gamepad-2", description: "展覽互動、遊戲化、桌遊設計。" }, 
+                { title: "聲音組", icon: "mic-2", description: "Podcast 製作、錄音剪輯、配樂企劃。" }, 
+                { title: "美術組", icon: "palette", description: "視覺設計、插畫漫畫、攝影、影片美術。" }, 
+                { title: "考據組", icon: "search", description: "史料查找、資料校對。" }, 
+                { title: "口述組", icon: "headphones", description: "訪談企劃、口述歷史。" }, 
+                { title: "行銷組", icon: "share-2", description: "社群經營、宣傳文案、活動曝光。" } 
+            ],
             en: [ { title: "Gameplay", icon: "gamepad-2", description: "Interactive exhibition, gamification, board game design." }, { title: "Audio", icon: "mic-2", description: "Podcast production, sound design, scoring." }, { title: "Art & Design", icon: "palette", description: "Visual design, illustration, cinematography." }, { title: "Research", icon: "search", description: "Historical research and fact-checking." }, { title: "Oral History", icon: "headphones", description: "Interview planning, oral history." }, { title: "Marketing", icon: "share-2", description: "Community management, copywriting, event promotion." } ]
         };
 
@@ -153,88 +207,65 @@
             en: [{ category: "DIGITAL HUMANITIES", title: "Digital Tools for Historical Research", desc: "Elective Course, Department of History, NCKU", link: "courses-site/index.html", btnText: "VIEW SITE" }]
         };
 
-        function init() { applyTheme(); applyLanguage(); lucide.createIcons(); }
+        function init() { applyTheme(); applyLanguage(); lucide.createIcons(); setupScrollReveal(); }
         function toggleDarkMode() { darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); applyTheme(); }
+        function applyTheme() {
+            const html = document.documentElement;
+            if (darkMode) { html.classList.add('dark'); document.getElementById('theme-icon').setAttribute('data-lucide', 'sun'); document.getElementById('theme-icon-mobile').setAttribute('data-lucide', 'sun'); } 
+            else { html.classList.remove('dark'); document.getElementById('theme-icon').setAttribute('data-lucide', 'moon'); document.getElementById('theme-icon-mobile').setAttribute('data-lucide', 'moon'); }
+            lucide.createIcons();
+        }
         function toggleLanguage() { lang = lang === 'zh' ? 'en' : 'zh'; localStorage.setItem('lang', lang); applyLanguage(); }
-        
         function applyLanguage() {
             const c = content[lang];
             for (let key in c) { const el = document.getElementById('text-' + key); if (el) el.innerHTML = c[key]; }
-            
-            const mobileMap = { 'text-mobileHome': 'navHome', 'text-mobileMembers': 'navMembers', 'text-mobileCourses': 'navCourses', 'text-mobileContact': 'navContact' };
-            for (let id in mobileMap) { const el = document.getElementById(id); if (el) el.innerText = c[mobileMap[id]]; }
-
+            document.getElementById('lang-toggle-text').innerText = lang === 'zh' ? 'EN' : 'ZH';
+            document.getElementById('lang-toggle-text-mobile').innerText = lang === 'zh' ? 'EN' : 'ZH';
             const mobileLangLabel = document.getElementById('text-mobileLangLabel');
-            if (mobileLangLabel) mobileLangLabel.innerText = lang === 'zh' ? '切換語言' : 'Language';
-            
-            const langBtnText = document.getElementById('lang-toggle-text');
-            if (langBtnText) langBtnText.innerText = lang === 'zh' ? 'EN' : 'ZH';
-            const langBtnTextMob = document.getElementById('lang-toggle-text-mobile');
-            if (langBtnTextMob) langBtnTextMob.innerText = lang === 'zh' ? 'EN' : 'ZH';
-
-            renderGroups(); renderMembers(); renderCourses();
+            if (mobileLangLabel) mobileLangLabel.innerText = lang === 'zh' ? 'LANGUAGE' : 'Language';
+            renderGroups(); renderMembers(); renderCourses(); setupScrollReveal();
         }
-
         function renderGroups() {
-            const container = document.getElementById('group-grid');
-            if (!container) return;
-            container.innerHTML = groupsData[lang].map(group => `
-                <div class="p-8 border-2 border-current/5 bg-white dark:bg-zinc-900 hover:border-accent hover:shadow-[0_15px_40px_-12px_rgba(131,51,233,0.15)] transition-all duration-500 group rounded-2xl cursor-default">
-                    <div class="mb-6 p-4 w-14 h-14 flex items-center justify-center bg-accent/5 rounded-xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500"><i data-lucide="${group.icon}" size="28"></i></div>
-                    <h3 class="text-xl font-black mb-3 tracking-wider group-hover:text-accent transition-colors duration-500">${group.title}</h3>
-                    <p class="text-sm opacity-60 leading-relaxed group-hover:opacity-100 transition-opacity duration-500">${group.description}</p>
+            const container = document.getElementById('group-grid'); if (!container) return;
+            container.innerHTML = groupsData[lang].map((group, i) => `
+                <div class="p-12 border-2 border-current/5 bg-white dark:bg-[#111] hover:border-accent hover:shadow-[0_30px_60px_-12px_rgba(131,51,233,0.1)] transition-all duration-700 group rounded-3xl cursor-default reveal" style="transition-delay: ${i*100}ms">
+                    <div class="mb-10 p-5 w-20 h-20 flex items-center justify-center bg-accent/5 rounded-2xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500 scale-110"><i data-lucide="${group.icon}" size="36"></i></div>
+                    <h3 class="text-3xl font-black mb-6 tracking-tight group-hover:text-accent transition-colors duration-500">${group.title}</h3>
+                    <p class="text-base opacity-50 leading-relaxed group-hover:opacity-100 transition-opacity duration-500">${group.description}</p>
                 </div>
             `).join('');
             lucide.createIcons();
         }
-
         function renderMembers() {
-            const container = document.getElementById('member-list');
-            if (!container) return;
-            container.innerHTML = teamData[lang].map(m => `
-                <div class="p-10 bg-white dark:bg-stone-900 border border-current/5 rounded-2xl team-card-shadow transition-all hover:-translate-y-1">
-                    <span class="text-3xl font-black tracking-tight text-accent mb-6 block border-b border-accent/10 pb-4">${m.role}</span>
-                    <h3 class="text-5xl font-black mb-4 tracking-wider">${m.name}</h3>
-                    <p class="text-lg opacity-60 leading-relaxed font-medium">${m.desc}</p>
+            const container = document.getElementById('member-list'); if (!container) return;
+            container.innerHTML = teamData[lang].map((m, i) => `
+                <div class="p-12 bg-white dark:bg-[#0a0a0a] border border-current/5 rounded-[2.5rem] team-card-shadow transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl reveal" style="transition-delay: ${i*150}ms">
+                    <span class="text-sm font-black tracking-widest text-accent mb-8 block border-b border-accent/10 pb-4 uppercase">${m.role}</span>
+                    <h3 class="text-6xl font-black mb-6 tracking-tighter leading-none">${m.name}</h3>
+                    <p class="text-xl opacity-50 leading-relaxed font-bold">${m.desc}</p>
                 </div>
             `).join('');
         }
-
         function renderCourses() {
-            const container = document.getElementById('course-list');
-            if (!container) return;
+            const container = document.getElementById('course-list'); if (!container) return;
             container.innerHTML = coursesData[lang].map(c => `
-                <div class="py-16 flex flex-col md:flex-row md:items-center justify-between group">
-                    <div class="flex-1 text-left"><span class="text-xs font-black tracking-[0.3em] text-accent mb-4 block uppercase">${c.category}</span><h3 class="text-5xl font-black mb-4 tracking-tight group-hover:text-accent transition-colors">${c.title}</h3><p class="text-xl opacity-70 font-bold">${c.desc}</p></div>
-                    <div class="mt-8 md:mt-0 md:ml-12"><a href="${c.link}" class="px-12 py-6 text-sm font-black tracking-widest border-2 border-current hover:bg-accent hover:text-white hover:border-accent transition-all no-underline inline-block whitespace-nowrap uppercase rounded-sm">${c.btnText}</a></div>
+                <div class="py-24 group reveal">
+                    <div class="text-left">
+                        <span class="text-sm font-black tracking-[0.5em] text-accent mb-6 block uppercase">${c.category}</span>
+                        <a href="${c.link}" class="inline-block group-hover:text-accent transition-colors duration-500">
+                            <h3 class="text-6xl md:text-7xl font-black mb-6 tracking-tighter leading-none">${c.title}</h3>
+                        </a>
+                        <p class="text-2xl opacity-60 font-black">${c.desc}</p>
+                    </div>
                 </div>
             `).join('');
-            const comingSoon = lang === 'zh' ? '更多課程正在籌備中' : 'More courses in preparation';
-            container.innerHTML += `<div class="py-16 opacity-20"><p class="text-2xl font-black tracking-[0.2em] uppercase italic text-center">${comingSoon}</p></div>`;
+            container.innerHTML += `<div class="py-32 opacity-10 reveal"><p class="text-4xl font-black tracking-[0.4em] uppercase text-center">More To Come</p></div>`;
         }
-
-        function applyTheme() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('theme-icon');
-            const themeIconMobile = document.getElementById('theme-icon-mobile');
-            if (darkMode) { html.classList.add('dark'); themeIcon.setAttribute('data-lucide', 'sun'); themeIconMobile.setAttribute('data-lucide', 'sun'); } 
-            else { html.classList.remove('dark'); themeIcon.setAttribute('data-lucide', 'moon'); themeIconMobile.setAttribute('data-lucide', 'moon'); }
-            lucide.createIcons();
+        function setupScrollReveal() {
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
-
-        function showPage(pageId) {
-            currentPage = pageId;
-            ['home', 'members', 'courses'].forEach(p => { const el = document.getElementById(`page-${p}`); if (el) el.classList.add('hidden'); });
-            const currentEl = document.getElementById(`page-${pageId}`);
-            if (currentEl) currentEl.classList.remove('hidden');
-            document.querySelectorAll('.nav-link').forEach(link => {
-                if (link.getAttribute('data-page') === pageId) { link.classList.remove('opacity-40'); link.classList.add('opacity-100', 'font-bold'); }
-                else { link.classList.remove('opacity-100', 'font-bold'); link.classList.add('opacity-40'); }
-            });
-            document.getElementById('mobile-menu').classList.add('hidden');
-            scrollToTop();
-            applyLanguage(); // Ensure page content is in correct language
-        }
+        function showPage(pageId) { currentPage = pageId; ['home', 'members', 'courses'].forEach(p => { const el = document.getElementById(`page-${p}`); if (el) el.classList.add('hidden'); }); const cEl = document.getElementById(`page-${pageId}`); if (cEl) cEl.classList.remove('hidden'); document.querySelectorAll('.nav-link').forEach(link => { if (link.getAttribute('data-page') === pageId) link.classList.add('opacity-100', 'font-black'); else link.classList.remove('opacity-100', 'font-black'); }); document.getElementById('mobile-menu').classList.add('hidden'); scrollToTop(); applyLanguage(); }
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         init();

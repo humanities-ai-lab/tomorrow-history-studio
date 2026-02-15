@@ -23,9 +23,31 @@
         ::selection { background-color: #8333e9; color: #fff; }
         ::-webkit-scrollbar { width: 0px; }
         html { scroll-behavior: smooth; }
+
+        /* 噪音紋理疊層 */
+        .bg-grain::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
+<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 bg-grain">
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-black/5 dark:border-white/10">
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex justify-between h-20 items-center">
@@ -124,18 +146,29 @@
         function init() {
             const container = document.getElementById('syllabus-list');
             container.innerHTML = syllabus.map(s => `
-                <div class="py-12 flex flex-col md:flex-row md:items-center justify-between group hover:bg-current/[0.01] transition-all">
-                    <div class="flex items-center space-x-8">
-                        <span class="text-3xl font-black text-accent opacity-20 group-hover:opacity-100 transition-opacity">${s.week}</span>
+                <div class="py-12 px-6 flex flex-col md:flex-row md:items-center justify-between group hover:bg-accent/[0.02] border-b border-current/10 transition-all reveal relative overflow-hidden">
+                    <div class="absolute inset-0 bg-accent/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    <div class="flex items-center space-x-8 relative z-10">
+                        <span class="text-3xl font-black text-accent opacity-20 group-hover:opacity-100 transition-opacity duration-500">${s.week}</span>
                         <div class="text-left">
-                            <h4 class="text-2xl font-black mb-2">${s.title}</h4>
-                            <p class="opacity-50 text-base font-medium">${s.desc}</p>
+                            <h4 class="text-2xl font-black mb-2 group-hover:text-accent transition-colors duration-500">${s.title}</h4>
+                            <p class="opacity-50 text-base font-medium group-hover:opacity-80 transition-opacity duration-500">${s.desc}</p>
                         </div>
                     </div>
                 </div>
             `).join('');
             applyTheme();
             lucide.createIcons();
+            setupScrollReveal();
+        }
+
+        function setupScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
         function toggleDarkMode() { darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); applyTheme(); }
