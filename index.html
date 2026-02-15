@@ -176,7 +176,7 @@
     </footer>
 
     <script>
-        let darkMode = localStorage.getItem('theme') === 'dark';
+        let darkMode = localStorage.getItem('theme') === 'dark' || false;
         let lang = localStorage.getItem('lang') || 'zh';
         let currentPage = 'home';
 
