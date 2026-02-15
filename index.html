@@ -176,8 +176,14 @@
     </footer>
 
     <script>
-        let darkMode = localStorage.getItem('theme') === 'dark' || false;
-        let lang = localStorage.getItem('lang') || 'zh';
+        // CRITICAL: Reset everything to defaults on every load
+        // This ensures the user always sees White + Chinese first, 
+        // regardless of previous session storage.
+        localStorage.setItem('theme', 'light');
+        localStorage.setItem('lang', 'zh');
+
+        let darkMode = false;
+        let lang = 'zh';
         let currentPage = 'home';
 
         const content = {
@@ -207,7 +213,14 @@
             en: [{ category: "DIGITAL HUMANITIES", title: "Digital Tools for Historical Research", desc: "Elective Course, Department of History, NCKU", link: "courses-site/index.html", btnText: "VIEW SITE" }]
         };
 
-        function init() { applyTheme(); applyLanguage(); lucide.createIcons(); setupScrollReveal(); }
+        function init() { 
+            // Final safety check to ensure light mode class is applied if darkMode is false
+            if (!darkMode) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+            }
+            applyTheme(); applyLanguage(); lucide.createIcons(); setupScrollReveal(); 
+        }
         function toggleDarkMode() { darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); applyTheme(); }
         function applyTheme() {
             const html = document.documentElement;
