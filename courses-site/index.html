@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://unpkg.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none';">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'self' https://forms.gle; upgrade-insecure-requests;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>史學研究的數位工具 | 明日歷史工作室</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../assets/vendor/tailwindcss-cdn.js"></script>
+    <script src="../assets/vendor/lucide-0.468.0.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -68,7 +67,7 @@
                     <button onclick="toggleDarkMode()" class="opacity-40 hover:opacity-100 transition-opacity">
                         <i id="theme-icon" data-lucide="moon" size="18"></i>
                     </button>
-                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" class="contact-btn px-5 py-2 text-sm font-bold border border-current hover:bg-accent hover:text-white hover:border-accent transition-all uppercase tracking-widest no-underline rounded-sm">聯繫我們</a>
+                    <a href="https://forms.gle/esJKC67wEYaBsKYY6" target="_blank" rel="noopener noreferrer" class="contact-btn px-5 py-2 text-sm font-bold border border-current hover:bg-accent hover:text-white hover:border-accent transition-all uppercase tracking-widest no-underline rounded-sm">聯繫我們</a>
                 </div>
             </div>
         </div>
